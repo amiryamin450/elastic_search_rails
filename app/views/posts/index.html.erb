@@ -1,0 +1,29 @@
+<div class="container">
+  <!-- Search Form -->
+  <div class="search-form">
+    <%= form_tag search_posts_path, method: :get do %>
+      <%= text_field_tag :q, params[:q], placeholder: 'Search blog posts...' %>
+      <%= submit_tag 'Search' %>
+    <% end %>
+  </div>
+
+  <!-- Blog Posts List -->
+  <% if @posts.any? %>
+    <% @posts.each do |post| %>
+      <div class="post">
+        <h2><%= post.title %></h2>
+        <p class="meta">By <%= post.author %> | Published on <%= post.published_at.strftime("%B %d, %Y") %></p>
+        <p><%= post.content.truncate(200) %></p>
+        <p><strong>Tags:</strong> <%= post.tags %></p>
+      </div>
+    <% end %>
+  <% else %>
+    <p>No blog posts found.</p>
+  <% end %>
+
+  <!-- Pagination Links -->
+  <div class="pagination">
+    <%= paginate @posts %>
+  </div>
+</div>
+
